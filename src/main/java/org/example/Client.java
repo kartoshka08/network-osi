@@ -9,22 +9,13 @@ import java.net.Socket;
 
 
 public class Client {
-    public static final Integer LOCALHOST_PORT = 8083;
     public static void main(String[] args) throws IOException{
-        String localhost = "netology.ru";
-        int port = LOCALHOST_PORT;
-        try (Socket clientSocket = new Socket(localhost, port);
-             PrintWriter out = new
-                     PrintWriter(clientSocket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new
-                     InputStreamReader(clientSocket.getInputStream()))) {
-            out.println("GET / HTTP/1.1\n" +
-                    "Host: netology.ru\n\n\n");
-            String resp = in.readLine();
-            System.out.println(resp);
+        try (Socket clientSocket = new Socket("localhost", Main.LOCALHOST_PORT);
+             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
+        ) {
+            writer.println("Hello");
+            System.out.println(reader.readLine());
         }
-        InetAddress inetAddress = InetAddress.getByName(localhost);
-        System.out.println(localhost + ", ip address: " + inetAddress.getHostAddress());
     }
-
 }
